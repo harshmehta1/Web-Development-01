@@ -1,9 +1,13 @@
 defmodule Calc do
 
   def main() do
-    input = String.trim(IO.gets(">"))
-    output = eval(input)
-    IO.puts(inspect(output))
+    try do 
+    	input = String.trim(IO.gets(">"))
+    	output = eval(input)
+    	IO.puts(inspect(output))
+    catch
+	x -> IO.puts(Enum.join(["Error occured during parsing.", x], " "))
+    end
     main()
   end
 
@@ -115,7 +119,7 @@ defmodule Calc do
 
   def apply_ops(op, val2, val1) when op == "/" do
     cond do 
-	(val2 == 0) -> IO.puts("Error : Division by 0")
+	(val2 == 0) -> throw("Error : Division by 0")
 	true -> div(val1, val2)
     end
   end

@@ -25,11 +25,11 @@ defmodule Calc do
     List.first(elem(tpl1,1))
   end
 
-  def loop([], ops, vals)do
+  defp loop([], ops, vals)do
     {ops, vals} 
   end
 
-  def loop([token|tokens], ops, vals) do
+  defp loop([token|tokens], ops, vals) do
     tpl = process_token(token, ops, vals)
     ops = elem(tpl,0)
     vals = elem(tpl,1)
@@ -39,7 +39,7 @@ defmodule Calc do
     {ops, vals}
   end
 
-  def process_token(token, ops, vals) do
+  defp process_token(token, ops, vals) do
     cond do
       token == "(" ->
         ops = [token | ops]
@@ -59,7 +59,7 @@ defmodule Calc do
     #{ops, vals}
   end
 
-  def process_parantheses([op | ops], vals) when op != "(" do
+  defp process_parantheses([op | ops], vals) when op != "(" do
     [v2 | vals] = vals
     [v1 | vals] = vals
     x = apply_ops(op, v2, v1)
@@ -71,12 +71,12 @@ defmodule Calc do
     {ops,vals}
   end
 
-  def process_parantheses(ops,vals) do
+  defp process_parantheses(ops,vals) do
     #IO.puts(Enum.join([inspect(List.first(ops)), " terminate"], " "))
     {ops,vals}
   end
 
-  def addops(op, ops, vals) do
+  defp addops(op, ops, vals) do
     #IO.puts(Enum.join([op, inspect(ops)], " "))
     cond do
       ops != [] and higher_precedence(op, Enum.at(ops,0)) ->
@@ -97,7 +97,7 @@ defmodule Calc do
      end
   end
 
-  def higher_precedence(op1,op2) do
+  defp higher_precedence(op1,op2) do
     cond do
       op2 == "(" or op2 == ")" -> false
       ((op1 == "*" or op1 == "/") and (op2 == "+" or op2 == "-")) -> false
@@ -105,26 +105,26 @@ defmodule Calc do
     end
   end
 
-  def int_parse(val) do
+  defp int_parse(val) do
      elem(Integer.parse(val),0)
   end
 
-  def apply_ops(op, val2, val1) when op == "+" do
+  defp apply_ops(op, val2, val1) when op == "+" do
     (val1 + val2)
   end
 
-  def apply_ops(op, val2, val1) when op == "-" do
+  defp apply_ops(op, val2, val1) when op == "-" do
     (val1 - val2)
   end
 
-  def apply_ops(op, val2, val1) when op == "/" do
+  defp apply_ops(op, val2, val1) when op == "/" do
     cond do 
 	(val2 == 0) -> throw("Error : Division by 0")
 	true -> div(val1, val2)
     end
   end
 
-  def apply_ops(op, val2, val1) when op == "*" do
+  defp apply_ops(op, val2, val1) when op == "*" do
     (val1 * val2)
   end
 end
