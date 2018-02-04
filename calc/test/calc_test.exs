@@ -18,8 +18,8 @@ defmodule CalcTest do
        assert Calc.eval(" 5 - 7 + (8 * 4) - 11 * (31 / 4) ") == -47
   end
 
-  test "input 4 - complex calculation" do
-       assert Calc.eval(" 2 / (2 / (2 / (2 / (22)))) ") == -47
+  test "input 5 - complex calculation" do
+       assert Calc.eval(" 100 / (2 / (2 / (2 / (2)))) ") == 100
   end
 	   
 
